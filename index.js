@@ -10,7 +10,7 @@ const client_id = 'pxeci55phi3wv0qd5zezei2aleni8y';
 const login = 'gypsy93';
 const streams = 'https://api.twitch.tv/helix/search/channels?query=' + login;
 const videos = 'https://api.twitch.tv/helix/videos?user_id=';
-const oauthpoint = 'https://id.twitch.tv/oauth2/authorize?client_id=pxeci55phi3wv0qd5zezei2aleni8y&redirect_uri=http%3a%2f%2flocalhost&response_type=token';
+const oauthpoint = 'https://id.twitch.tv/oauth2/authorize?client_id=pxeci55phi3wv0qd5zezei2aleni8y&redirect_uri=http%3a%2f%2fisgyp.live&response_type=token';
 const liveurl = 'https://twitch.tv/gypsy93';
 var token;
 var img;

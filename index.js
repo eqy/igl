@@ -79,7 +79,7 @@ function process(data) {
 
 
 function countdownredirect(count) {
-    let text = "Redirecting in " + count + "...";
+    let text = "HOLY MOLY HE'S LIVE! Redirecting in " + count + "...";
     $("#contenttext").text(text);
     count = count - 1;
     if (count < 1) {

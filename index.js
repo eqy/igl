@@ -58,7 +58,12 @@ function process(data) {
     console.log("is live: " + online);
     if (online) {
         console.log("HOLY MOLY he's live");
-        window.location.replace(liveurl);
+        $("#contenttext").text('');
+        $("#contentimageshake").html('<img src="' + img + '">');
+        let count = 5;
+        setInterval(function() {
+            count = countdownredirect(count);
+        }, 1000);
     } else {
         console.log("not live control");
         let reqheaders = {
@@ -70,6 +75,17 @@ function process(data) {
         }).then(response => response.json()).then(data => estimate(data));
     }
     //setInterval(memeCycle, 1000);
+}
+
+
+function countdownredirect(count) {
+    let text = "Redirecting in " + count + "...";
+    $("#contenttext").text(text);
+    count = count - 1;
+    if (count < 1) {
+        window.location.replace(liveurl);
+    }
+    return count;
 }
 
 

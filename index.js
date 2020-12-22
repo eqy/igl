@@ -100,7 +100,7 @@ function estimate(data) {
         let lastdate = new Date(sorted[0].created_at);
         let lastlastdate = new Date(sorted[1].created_at);
         setInterval(function() {memeCycle(lastdate, lastlastdate);}, 1000);
-        $("#contenttext").text("No, gyp is not live.");
+        $("#contenttext").text("NO");
         $("#contentimage").html('<img src="' + img + '">');
     } else {
         console.log("guess ill die");

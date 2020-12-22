@@ -11,7 +11,9 @@ const login = 'gypsy93';
 const streams = 'https://api.twitch.tv/helix/search/channels?query=' + login;
 const videos = 'https://api.twitch.tv/helix/videos?user_id=';
 const oauthpoint = 'https://id.twitch.tv/oauth2/authorize?client_id=pxeci55phi3wv0qd5zezei2aleni8y&redirect_uri=http%3a%2f%2flocalhost&response_type=token';
+const liveurl = 'https://twitch.tv/gypsy93';
 var token;
+var img;
 //const streams = 'https://api.twitch.tv/helix/streams?user_login=gypsy93';
 
 
@@ -33,14 +35,14 @@ function bouncer() {
             method: 'GET',
             headers: reqheaders
         }).then(response => response.json()).then(data => process(data));
-        console.log("what");
+        // console.log("what");
     }
 }
 
 
 function process(data) {
     console.log("what2");
-    console.log(data);
+    // console.log(data);
     let res = data.data;
     var strimdata;
     for (i = 0; i < res.length; res++) {
@@ -52,9 +54,11 @@ function process(data) {
     } 
     let online = strimdata.is_live;
     let id = strimdata.id;
+    img = strimdata.thumbnail_url;
     console.log("is live: " + online);
     if (online) {
         console.log("HOLY MOLY he's live");
+        window.location.replace(liveurl);
     } else {
         console.log("not live control");
         let reqheaders = {
@@ -71,18 +75,24 @@ function process(data) {
 
 function estimate(data) {
     let res = data.data;
-    for (i = 0 ; i < res.length; i++) {
-        console.log(res[i]);
+    let sorted = res.sort(function(a, b) {
+        return a.id < b.id;});
+    for (i = 0 ; i < sorted.length; i++) {
+        // console.log(sorted[i]);
+    }
+    if (sorted.length > 1) {
+        let lastdate = new Date(sorted[0].created_at);
+        let lastlastdate = new Date(sorted[1].created_at);
+        setInterval(function() {memeCycle(lastdate, lastlastdate);}, 1000);
+        $("#contenttext").text("No, gyp is not live.");
+        $("#contentimage").html('<img src="' + img + '">');
+    } else {
+        console.log("guess ill die");
     }
 }
 
 
-function memeCycle(data) {
-    let lastlastdate = new Date('2020-12-11T19:39');
-    let lastdate = new Date('2020-12-20T19:46:00');
-    let now = new Date();
-    var diff = Math.abs(now - lastdate);
-    let pred = new Date(lastdate.getTime() + Math.abs(lastdate - lastlastdate));
+function dumbprint(prefix, suffix, diff) {
     // for dramatic effect lmao
     let lastyear = Math.floor(diff / 31536000000);
     diff = diff % 31536000000;
@@ -94,10 +104,25 @@ function memeCycle(data) {
     diff = diff % 86400000;
     let lasthour = Math.floor(diff / 3600000);
     diff = diff % 3600000;
+    let lastminute = Math.floor(diff / 60000);
+    diff = diff % 60000;
     let lastsecond = Math.round(diff / 1000);
-    let lasttext = "Last Stream was (" + lastyear + " years " + lastmonth + " months " + lastweek + " weeks " + lastday + " days " + lasthour + " hours " + lastsecond + " seconds ago)."  
+    let text = prefix + " (" + lastyear + " years " + lastmonth + " months " + lastweek + " weeks " + lastday + " days " + lasthour + " hours " + lastsecond + " seconds) " + suffix;  
+    return text;
+}
+
+
+function memeCycle(lastdate, lastlastdate) {
+    let now = new Date();
+    let prevdiff = Math.abs(now - lastdate);
+    let preddiff = Math.abs(lastdate - lastlastdate);
+    let pred = new Date(lastdate.getTime() + preddiff);
+    let preddiffcur = pred - now;
     //console.log(diff);
-    console.log(lasttext);
+    let prevtext = dumbprint("last stream was on " + lastdate, "ago", prevdiff);
+    let predtext = dumbprint("next stream is predicted to be on " + pred + " , in", "", preddiffcur);
+    $("#prev").text(prevtext);
+    $("#pred").text(predtext);
     //console.log(pred.getFullYear());
     //console.log(pred.getDays());
     //console.log(pred.getHours());

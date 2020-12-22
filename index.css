@@ -1,0 +1,30 @@
+body {
+    font-family: sans-serif;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#contenttext {
+    font-size: 36px;
+}
+
+#times {
+    font-size: 24px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to { 
+    transform: rotate(360deg);
+  }
+}
+
+#contentimage {
+    animation-name:            rotate; 
+    animation-duration:        120.0s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    margin: 0 auto;
+}

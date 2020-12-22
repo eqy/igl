@@ -60,7 +60,7 @@ function process(data) {
         console.log("HOLY MOLY he's live");
         $("#contenttext").text('');
         $("#contentimageshake").html('<img src="' + img + '">');
-        let count = 5;
+        let count = 6;
         setInterval(function() {
             count = countdownredirect(count);
         }, 1000);
@@ -80,11 +80,11 @@ function process(data) {
 
 function countdownredirect(count) {
     let text = "HOLY MOLY HE'S LIVE! Redirecting in " + count + "...";
-    $("#contenttext").text(text);
     if (count < 1) {
         window.location.replace(liveurl);
     } else {
         count = count - 1;
+        $("#contenttext").text(text);
     }
     return count;
 }

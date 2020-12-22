@@ -83,6 +83,7 @@ function countdownredirect(count) {
     $("#contenttext").text(text);
     if (count < 1) {
         window.location.replace(liveurl);
+    } else {
         count = count - 1;
     }
     return count;

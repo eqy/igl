@@ -81,9 +81,9 @@ function process(data) {
 function countdownredirect(count) {
     let text = "HOLY MOLY HE'S LIVE! Redirecting in " + count + "...";
     $("#contenttext").text(text);
-    count = count - 1;
     if (count < 1) {
         window.location.replace(liveurl);
+        count = count - 1;
     }
     return count;
 }

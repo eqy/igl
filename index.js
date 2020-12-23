@@ -124,7 +124,7 @@ function dumbprint(prefix, suffix, diff) {
     let lastminute = Math.floor(diff / 60000);
     diff = diff % 60000;
     let lastsecond = Math.round(diff / 1000);
-    let text = prefix + " (" + lastyear + " years " + lastmonth + " months " + lastweek + " weeks " + lastday + " days " + lasthour + " hours " + lastsecond + " seconds) " + suffix;  
+    let text = prefix + " (" + lastyear + " years " + lastmonth + " months " + lastweek + " weeks " + lastday + " days " + lasthour + " hours " + lastminute + " minutes " + lastsecond + " seconds) " + suffix;  
     return text;
 }
 

@@ -65,6 +65,7 @@ function process(data) {
             count = countdownredirect(count);
             if (count < 1) {
                 clearInterval(timer);
+                window.location.replace(liveurl);
             }
         }, 1000);
     } else {
@@ -83,7 +84,6 @@ function process(data) {
 
 function countdownredirect(count) {
     if (count < 1) {
-        window.location.replace(liveurl);
     } else {
         count = count - 1;
         let text = "HOLY MOLY HE'S LIVE! Redirecting in " + count + "...";

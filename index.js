@@ -61,8 +61,11 @@ function process(data) {
         $("#contenttext").text('');
         $("#contentimageshake").html('<img src="' + img + '">');
         let count = 6;
-        setInterval(function() {
+        var timer = setInterval(function() {
             count = countdownredirect(count);
+            if (count < 1) {
+                clearInterval(timer);
+            }
         }, 1000);
     } else {
         console.log("not live control");

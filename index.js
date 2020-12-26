@@ -142,7 +142,7 @@ function memeCycle(lastdate, lastlastdate) {
     let prevtext = dumbprint("last stream was on " + lastdate, "ago", prevdiff);
     var predtext = dumbprint("next stream is predicted to be on " + pred + " , in", "", preddiffcur);
     if (preddiffcur < 0) {
-        preddtext = "next stream was predicted to have already happened so whatever, I don't know... imagine trying to predict gyp";
+        predtext = "next stream was predicted to have already happened so whatever, I don't know... imagine trying to predict gyp";
     }
     $("#prev").text(prevtext);
     $("#pred").text(predtext);

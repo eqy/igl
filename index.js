@@ -2,8 +2,6 @@
 // this garbage at your own risk
 
 
-console.log("???????");
-
 //let client_id = ";
 //Components.utils.import("resource://gre/modules/Timer.jsm");
 const client_id = 'pxeci55phi3wv0qd5zezei2aleni8y';
@@ -27,7 +25,6 @@ function bouncer() {
     if (token.length < 1) {
         window.location.replace(oauthpoint);
     } else {
-        console.log("before");
         let reqheaders = {
             'client-id' : client_id,
             'Authorization' : 'Bearer ' + token};
@@ -35,16 +32,14 @@ function bouncer() {
             method: 'GET',
             headers: reqheaders
         }).then(response => response.json()).then(data => process(data));
-        // console.log("what");
     }
 }
 
 
 function process(data) {
-    console.log("what2");
-    // console.log(data);
     let res = data.data;
     var strimdata;
+    console.log(res);
     for (i = 0; i < res.length; res++) {
         if (res[i].display_name == login) {
             console.log("found");

@@ -39,6 +39,7 @@ function bouncer() {
 function process(data) {
     let res = data.data;
     var strimdata;
+    console.log(data);
     console.log(res);
     for (i = 0; i < res.length; res++) {
         if (res[i].display_name == login) {

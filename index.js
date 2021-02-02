@@ -52,11 +52,8 @@ function load(pagination) {
 function process(data) {
     let res = data.data;
     var strimdata = null;
-    console.log(data);
-    console.log(res);
     for (i = 0; i < res.length; res++) {
         if (res[i].display_name == login) {
-            
             console.log("found");
             strimdata = res[i];
             break;

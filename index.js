@@ -62,7 +62,7 @@ function process(data) {
             break;
         }
     } 
-    if (streamdata != null) {
+    if (strimdata != null) {
         let online = strimdata.is_live;
         let id = strimdata.id;
         img = strimdata.thumbnail_url;

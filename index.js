@@ -7,6 +7,7 @@
 const client_id = 'pxeci55phi3wv0qd5zezei2aleni8y';
 const login = 'gypsy93';
 const streams = 'https://api.twitch.tv/helix/search/channels?query=' + login;
+const id = '137448582';
 const videos = 'https://api.twitch.tv/helix/videos?user_id=';
 const oauthpoint = 'https://id.twitch.tv/oauth2/authorize?client_id=pxeci55phi3wv0qd5zezei2aleni8y&redirect_uri=https%3a%2f%2fisgyp.live&response_type=token';
 const liveurl = 'https://twitch.tv/gypsy93';
@@ -25,10 +26,22 @@ function bouncer() {
     if (token.length < 1) {
         window.location.replace(oauthpoint);
     } else {
-        let reqheaders = {
+        load(null);
+    }
+}
+
+
+function load(pagination) {
+    let reqheaders = {
             'client-id' : client_id,
             'Authorization' : 'Bearer ' + token};
+    if (pagination == null) {
         fetch(streams, {
+            method: 'GET',
+            headers: reqheaders
+        }).then(response => response.json()).then(data => process(data));
+    } else {
+        fetch(streams + '&after=' + pagination, {
             method: 'GET',
             headers: reqheaders
         }).then(response => response.json()).then(data => process(data));
@@ -38,41 +51,46 @@ function bouncer() {
 
 function process(data) {
     let res = data.data;
-    var strimdata;
+    var strimdata = null;
     console.log(data);
     console.log(res);
     for (i = 0; i < res.length; res++) {
         if (res[i].display_name == login) {
+            
             console.log("found");
             strimdata = res[i];
             break;
         }
     } 
-    let online = strimdata.is_live;
-    let id = strimdata.id;
-    img = strimdata.thumbnail_url;
-    console.log("is live: " + online);
-    if (online) {
-        console.log("HOLY MOLY he's live");
-        $("#contenttext").text('');
-        $("#contentimageshake").html('<img src="' + img + '">');
-        let count = 6;
-        var timer = setInterval(function() {
-            count = countdownredirect(count);
-            if (count < 1) {
-                clearInterval(timer);
-                window.location.replace(liveurl);
-            }
-        }, 1000);
+    if (streamdata != null) {
+        let online = strimdata.is_live;
+        let id = strimdata.id;
+        img = strimdata.thumbnail_url;
+        console.log("is live: " + online);
+        if (online) {
+            console.log("HOLY MOLY he's live");
+            $("#contenttext").text('');
+            $("#contentimageshake").html('<img src="' + img + '">');
+            let count = 6;
+            var timer = setInterval(function() {
+                count = countdownredirect(count);
+                if (count < 1) {
+                    clearInterval(timer);
+                    window.location.replace(liveurl);
+                }
+           }, 1000);
+        } else {
+            console.log("not live control");
+            let reqheaders = {
+            'client-id' : client_id,
+            'Authorization' : 'Bearer ' + token};
+            fetch(videos + id, {
+                method: 'GET',
+                headers: reqheaders
+            }).then(response => response.json()).then(data => estimate(data));
     } else {
-        console.log("not live control");
-        let reqheaders = {
-        'client-id' : client_id,
-        'Authorization' : 'Bearer ' + token};
-        fetch(videos + id, {
-            method: 'GET',
-            headers: reqheaders
-        }).then(response => response.json()).then(data => estimate(data));
+        console.log('moving to after: ' + data.pagination.cursor);
+        load(data.pagination.cursor);
     }
     //setInterval(memeCycle, 1000);
 }

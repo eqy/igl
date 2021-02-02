@@ -88,6 +88,7 @@ function process(data) {
                 method: 'GET',
                 headers: reqheaders
             }).then(response => response.json()).then(data => estimate(data));
+        }
     } else {
         console.log('moving to after: ' + data.pagination.cursor);
         load(data.pagination.cursor);

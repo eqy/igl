@@ -35,13 +35,13 @@ function load(pagination) {
     let reqheaders = {
             'client-id' : client_id,
             'Authorization' : 'Bearer ' + token};
-    if (pagination == null) {
-        fetch(streams, {
+    if (pagination != null) {
+        fetch(streams + '&after=' + pagination, {
             method: 'GET',
             headers: reqheaders
         }).then(response => response.json()).then(data => process(data));
     } else {
-        fetch(streams + '&after=' + pagination, {
+        fetch(streams, {
             method: 'GET',
             headers: reqheaders
         }).then(response => response.json()).then(data => process(data));
@@ -52,6 +52,7 @@ function load(pagination) {
 function process(data) {
     let res = data.data;
     var strimdata = null;
+    console.log(res.length);
     for (i = 0; i < res.length; res++) {
         console.log(res[i].display_name);
         if (res[i].display_name == login) {

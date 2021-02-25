@@ -53,6 +53,7 @@ function process(data) {
     let res = data.data;
     var strimdata = null;
     for (i = 0; i < res.length; res++) {
+        console.log(res[i].display_name);
         if (res[i].display_name == login) {
             console.log("found");
             strimdata = res[i];
